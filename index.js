@@ -362,8 +362,8 @@ function animateBattle() {
     emby.draw()
 }
 
-animate()
-// animateBattle()
+// animate()
+animateBattle()
 
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
