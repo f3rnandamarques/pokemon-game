@@ -335,9 +335,10 @@ const draggle = new Sprite({
     image: draggleImage,
     frames: {
         max: 4,
-        hold: 10
+        hold: 30
     },
-    animate: true
+    animate: true,
+    isEnemy: true
 })
 
 const embyImage = new Image()
@@ -345,7 +346,7 @@ embyImage.src = './images/embySprite.png'
 const emby = new Sprite({
     position: {
         x: 280,
-        y: 352
+        y: 325
     },
     image: embyImage,
     frames: {
@@ -355,15 +356,29 @@ const emby = new Sprite({
     animate: true
 })
 
+const renderedSprites = [draggle, emby]
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
-    draggle.draw()
-    emby.draw()
+
+    renderedSprites.forEach(sprite => {
+        sprite.draw()
+    })
 }
 
 // animate()
 animateBattle()
+
+document.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('click', (e) => {
+        const selectedAttack = attacks[e.currentTarget.innerHTML]
+        emby.attack({
+            attack: selectedAttack,
+            recipient: draggle,
+            renderedSprites
+        })
+    })
+})
 
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
